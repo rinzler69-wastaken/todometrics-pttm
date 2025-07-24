@@ -1,0 +1,332 @@
+{{ define "about.html" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | todometrics</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Google Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <style>
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      padding-top: 5rem;
+      padding-bottom: 2rem;
+      background-image: url('/static/images/bg.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.4);
+      z-index: -1;
+    }
+
+    .content-card {
+      border: 1px solid #D3D3D3;
+      border-radius: 1.5rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h4 {
+      font-weight: 600;
+    }
+
+    .gtk-navbar {
+      background: linear-gradient(to bottom, #ffffff, #f1f1f1);
+      border-bottom: 1px solid #ddd;
+    }
+
+    .navbar-brand {
+      color: #4b0082;
+    }
+
+    /* Hover color schemes */
+    .hover-overview:hover { background-color: rebeccapurple; color: #fff !important; }
+    .hover-tasks:hover { background-color: #0d6efd; color: #fff !important; }
+    .hover-completed:hover { background-color: #198754; color: #fff !important; }
+    .hover-about:hover { background-color: #ffc107; color: #fff !important; }
+
+    /* --- Animation Styles --- */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes marchOut {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes blipIn {
+        0% { opacity: 0; transform: scale(0.5, 0); }
+        50% { opacity: 1; transform: scale(1, 0.01); }
+        100% { opacity: 1; transform: scale(1, 1); }
+    }
+
+    .animated {
+        opacity: 0;
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .animated-blip {
+        opacity: 0;
+        animation: blipIn 0.5s ease-out forwards;
+    }
+
+    .logo-container img {
+        opacity: 0;
+        animation: marchOut 0.5s ease-out forwards;
+    }
+    .logo-container img:nth-child(1) { animation-delay: 2.0s; }
+    .logo-container img:nth-child(2) { animation-delay: 2.1s; }
+    .logo-container img:nth-child(3) { animation-delay: 2.2s; }
+    .logo-container img:nth-child(4) { animation-delay: 2.3s; }
+    .logo-container img:nth-child(5) { animation-delay: 2.4s; }
+    .logo-container img:nth-child(6) { animation-delay: 2.5s; }
+
+    .text-purple {
+        color: rebeccapurple;
+    }
+
+    /* --- Styles for the Details toggle link --- */
+    .details-toggle {
+      text-decoration: none;
+      color: #212529; /* Darker color for better contrast on white */
+      font-weight: 600;
+      display: flex; /* Use flexbox for alignment */
+      justify-content: space-between; /* Pushes icon to the right */
+      align-items: center;
+      width: 100%;
+    }
+    .details-toggle .material-symbols-outlined {
+      font-size: 1.5rem; /* Slightly larger icon */
+      transition: transform 0.2s ease-in-out;
+      color: #6c757d;
+    }
+    .details-toggle[aria-expanded="true"] .material-symbols-outlined {
+      transform: rotate(180deg); /* Flips the icon to point up */
+    }
+
+    .bg-purple {
+      background-color:rebeccapurple
+    }
+
+    .logo-image {
+      background-color: transparent !important;
+      filter: drop-shadow(0 0.5rem 1rem rgba(0, 0, 0, 0.20));
+    }
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg shadow fixed-top bg-white gtk-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+        <img src="/static/images/navbrand.svg" alt="todometrics" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse justify-content-end pt-3 pt-lg-0" id="mainNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "overview" }}bg bg-purple text-white{{ else }}text-dark hover-overview{{ end }}" href="/">
+            Overview
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "tasks" }}bg-primary text-white{{ else }}text-dark hover-tasks{{ end }}" href="/tasks">
+            Tasks
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "completed" }}bg-success text-white{{ else }}text-dark hover-completed{{ end }}" href="/completed">
+            Completed Tasks
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded-pill {{ if eq .active "about" }}bg-warning text-white{{ else }}text-dark hover-about{{ end }}" href="/about">
+            About
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+    <div class="d-flex justify-content-center">
+      <a class="mb-4 mt-2" href="/">
+        <img src="/static/images/appicon.svg" alt="appicon" height="100" class="drop-shadow logo-image animated-blip">
+      </a>
+    </div>
+    <h1 id="main-title" class="text-center text-purple mb-4">todometrics</h1>
+    <p class="text-muted text-center mb-4 animated" style="animation-delay: 0.2s;">
+      Not your average To-Do list.
+      <br>by <b>Art Fazil</b>
+    </p>
+
+    <div class="d-flex justify-content-center mb-4 animated-blip" style="animation-delay: 0.4s;">
+        <span class="d-flex align-items-center gap-2 border bg-white rounded-pill px-3 py-1 shadow-sm">
+            version <b id="version-number">1.2-alpha</b>
+        </span>
+    </div>
+    
+    <h5 id="made-with-title" class="mt-5 mb-4 text-center animated-blip" style="animation-delay: 1.5s;">Made With</h5>
+    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 mb-5 logo-container">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Go_Logo_Blue.svg" alt="Go" height="50">
+      <img src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" alt="Gin" height="50">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML" height="50">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS" height="50">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Javascript-shield.svg" alt="JavaScript" height="50">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="Bootstrap" height="50">
+    </div>
+
+    <div class="content-card bg-white bg-opacity-10 flex-wrap shadow-lg mt-4 animated-blip" style="animation-delay: 1.6s;">
+        <h2 class="mt-1">How to Use</h2>
+        <p class="mt-3"><strong class="navbar-brand">todometrics</strong> is designed to be a simple yet powerful tool to help you track your tasks and analyze your performance with discipline. Here’s how to get the most out of it:</p>
+        
+        <div class="mt-4">
+            <a class="details-toggle" data-bs-toggle="collapse" href="#how-to-manage" role="button" aria-expanded="true" aria-controls="how-to-manage">
+                <h4>Managing Your Tasks</h4>
+                <span class="material-symbols-outlined">expand_more</span>
+            </a>
+            <div class="collapse show" id="how-to-manage">
+                <div class="pt-2">
+                    <p>This is your main workspace for all ongoing tasks.</p>
+                    <ul>
+                        <li><strong>Adding a Task:</strong> Click the <strong>"+ Add Task"</strong> button to open the modal. You must define a <strong>Name</strong>, <strong>Due Date</strong>, and <strong>Priority</strong> for every task. These core details are set in stone once created.</li><br>
+                        <li><strong>Editing a Task:</strong> You can only edit a task's <strong>Description</strong>. This is by design. The core of the task is a firm commitment, but the details of <em>how</em> you'll do it can be updated as you go.</li><br>
+                        <li><strong>Completing a Task:</strong> Click the <strong>"Complete"</strong> button to mark a task as done. Be decisive! This action is <strong>irreversible</strong> and moves the task to your permanent archive.</li><br>
+                        <li><strong>Priority Badges:</strong> Tasks are automatically color-coded for scannability.
+                          <ul>
+                            <li><strong class="text-danger">HIGH</strong> priority tasks are red.</li>
+                            <li><strong class="text-warning">MEDIUM</strong> priority tasks are yellow.</li>
+                            <li><strong class="text-secondary">LOW</strong> priority tasks are gray.</li>
+                          </ul>
+                        </li>
+                    </ul><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a class="details-toggle" data-bs-toggle="collapse" href="#how-to-overview" role="button" aria-expanded="false" aria-controls="how-to-overview">
+                <h4>Understanding Your Overview</h4>
+                <span class="material-symbols-outlined">expand_more</span>
+            </a>
+            <div class="collapse" id="how-to-overview">
+                <div class="pt-2">
+                    <p>The Overview page is your command center for at-a-glance insights.</p>
+                    <ul>
+                        <li><strong>Configure View:</strong> Use this button to switch between two main views: <strong class="text-primary">Ongoing Stats</strong> or <strong class="text-success">Completed Stats</strong>.</li><br>
+                        <li><strong>The Performance Graph:</strong> This is where you track your discipline over time, based on a "Performance Score": 
+                          <ul>
+                            <li><strong class="text-purple">+2</strong> for Ahead of Time</li>
+                            <li><strong class="text-success">+1</strong> for Just in Time</li> 
+                            <li><strong class="text-danger">-1</strong> for Overdue</li> 
+                          </ul>
+                        </li><br>
+                      <li>You can toggle the graph between a <strong class="text-success">Monthly</strong> view (last 12 months) and a <strong class="text-primary">Yearly</strong> view (last 5 years). A higher bar means better performance!</li><br>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a class="details-toggle" data-bs-toggle="collapse" href="#how-to-completed" role="button" aria-expanded="false" aria-controls="how-to-completed">
+                <h4>Reviewing Your Accomplishments</h4>
+                <span class="material-symbols-outlined">expand_more</span>
+            </a>
+            <div class="collapse" id="how-to-completed">
+                <div class="pt-2">
+                    <p>This page is your permanent, unchangeable archive — a record of your work.</p>
+                    <ul>
+                        <li><strong>F1-Style Color Coding:</strong> Each completed task is color-coded based on your performance:
+                          <ul>
+                            <li><strong class="text-purple">Purple</strong class="text-purple"> (Ahead of Time)</li>
+                            <li><strong class="text-success">Green</strong class="text-success"> (Just in Time)</li>
+                            <li><strong class="text-danger">Red</strong class="text-danger"> (Overdue)</li>
+                          </ul>
+                        </li><br>
+                        <li><strong>Filtering & Exporting:</strong> You can filter the archive by month and year to review specific periods. If you need a formal record, you can <strong>Export as PDF</strong> to generate a clean report of the tasks in the current view.</li><br>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-5 mb-4">Changelogs</h2>
+        <ul>
+            <li><strong>v1.0a</strong> –
+            Added PDF export for completed tasks with month/year filter,
+            overdue highlighting,
+            conditional export visibility,
+            persistent filter state,
+            and UI improvements across the board.
+          </li>
+          <li><strong>v1.0</strong> – Initial Release.</li>
+        </ul>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Scramble animation function
+        function scrambleAnimate(element, charSet, duration) {
+            const finalValue = element.textContent;
+            let interval = null;
+            let counter = 0;
+
+            interval = setInterval(() => {
+                element.textContent = finalValue.split('').map(char => {
+                    if (char === ' ' || char === '-') return char;
+                    return charSet[Math.floor(Math.random() * charSet.length)];
+                }).join('');
+                
+                counter++;
+                if (counter > duration) {
+                    clearInterval(interval);
+                    element.textContent = finalValue;
+                }
+            }, 60);
+        }
+
+        // Trigger animations
+        const mainTitle = document.getElementById('main-title');
+        const versionNumber = document.getElementById('version-number');
+        const madeWithTitle = document.getElementById('made-with-title');
+        
+        setTimeout(() => {
+            scrambleAnimate(mainTitle, 'abcdefghijklmnopqrstuvwxyz', 20);
+            scrambleAnimate(versionNumber, '0123456789.-abcdefghijklmnopqrstuvwxyz', 20);
+        }, 200);
+
+        setTimeout(() => {
+            scrambleAnimate(madeWithTitle, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 15);
+        }, 1500);
+    });
+</script>
+</body>
+</html>
+{{ end }}

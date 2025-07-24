@@ -1,0 +1,223 @@
+{{ define "about.html" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | todometrics</title>
+  <script>
+    // This script runs immediately to prevent a flash of the light theme.
+    (function() {
+        try {
+        var theme = localStorage.getItem('theme');
+        if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        } catch (e) {
+        // Silently fail if localStorage is disabled
+        }
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon-dark.svg" media="(prefers-color-scheme: dark)">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/main.css">
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg shadow fixed-top gtk-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+        <img src="/static/images/navbrand.svg" alt="todometrics" height="30" class="logo-light">
+        <img src="/static/images/navbrand-dark.svg" alt="todometrics" height="30" class="logo-dark">
+    </a>
+    <div class="d-flex align-items-center ms-auto">
+      <div class="d-none d-lg-flex justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "overview" }}bg-purple text-white{{ else }}hover-overview{{ end }}" href="/">Overview</a></li>
+          <li class="nav-item"><a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "tasks" }}bg-primary text-white{{ else }}hover-tasks{{ end }}" href="/tasks">Tasks</a></li>
+          <li class="nav-item"><a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "completed" }}bg-success text-white{{ else }}hover-completed{{ end }}" href="/completed">Completed Tasks</a></li>
+          <li class="nav-item"><a class="nav-link px-3 rounded-pill me-lg-2 {{ if eq .active "about" }}bg-warning text-white{{ else }}hover-about{{ end }}" href="/about">About</a></li>
+        </ul>
+      </div>
+      <button id="theme-toggle" class="btn theme-toggle-btn ms-lg-2">
+          <span class="material-icons"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <div class="mx-auto" style="max-width: 800px;">
+
+    <section class="text-center animated-section" style="animation-delay: 0.1s;">
+      <div class="d-flex justify-content-center mb-4">
+        <a href="/">
+          <div class="appicon-container mt-4">
+            <img src="/static/images/appicon-dark.svg" alt="App Icon" height="100" class="appicon-logo is-light-icon">
+            <img src="/static/images/appicon.svg" alt="App Icon" height="100" class="appicon-logo is-dark-icon">
+          </div>
+        </a>
+      </div>
+      <h1 class="h2 text-brand">todometrics</h1>
+      <p class="text-muted mb-4">Not your average To-Do list.<br>
+      by <b>Art Fazil</b></p>
+      <div class="d-flex justify-content-center">
+        <div class="d-flex align-items-center gap-2 border rounded-pill px-3 py-1 shadow-sm animated-blip version-pill" style="animation-delay: 0.1s;">
+            version <b id="version-number">1.2</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-card shadow mt-5 animated-section" style="animation-delay: 0.2s;">
+      <h2 class="mb-3">Philosophy & Usage</h2>
+      <p class="text-muted"><strong class="text-brand">todometrics</strong> is designed for simplicity and discipline. The core principles are immutable commitments and measurable progress. Here’s how to get the most out of it.</p>
+
+      <details open>
+        <summary>
+          Managing Tasks
+          <i class="details-icon" aria-hidden="true">expand_more</i>
+        </summary>
+        <div class="details-content">
+          <ul class="list-unstyled">
+            <li><strong>Add Task:</strong> Core details (Name, Due Date, Priority) are set in stone upon creation to encourage deliberate planning.</li>
+            <li class="mt-3"><strong>Edit Task:</strong> Only the 'Description' is editable. The commitment is firm, but the method can evolve.</li>
+            <li class="mt-3"><strong>Complete Task:</strong> This action is irreversible. It moves the task to your permanent archive. Be decisive.</li>
+            <li class="mt-3"><strong>Priorities:</strong> Tasks are visually tagged for quick assessment.
+              <div class="d-flex flex-wrap gap-2 mt-2">
+                <span class="badge rounded-pill text-bg-danger">HIGH</span>
+                <span class="badge rounded-pill text-bg-warning">MEDIUM</span>
+                <span class="badge rounded-pill text-bg-secondary">LOW</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Understanding Your Overview
+          <i class="details-icon" aria-hidden="true">expand_more</i>
+        </summary>
+        <div class="details-content">
+            <p>The Overview is your command center for at-a-glance insights into your performance, based on a simple scoring system:</p>
+            <ul class="list-unstyled">
+                <li><strong class="text-purple">+2 points</strong> for 'Ahead of Time'</li>
+                <li><strong class="text-success">+1 point</strong> for 'Just in Time'</li>
+                <li><strong class="text-danger">-1 point</strong> for 'Overdue'</li>
+            </ul>
+            <p class="mt-3">Toggle the performance graph between a Monthly and Yearly view to track your discipline over time. Higher bars mean better performance.</p>
+        </div>
+      </details>
+      
+      <details>
+        <summary>
+          Reviewing Accomplishments
+          <i class="details-icon" aria-hidden="true">expand_more</i>
+        </summary>
+        <div class="details-content">
+          <p>The "Completed Tasks" page is your immutable archive. Each task is color-coded based on when it was completed relative to its due date:</p>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span class="status-pill status-pill-purple">Ahead of Time</span>
+            <span class="status-pill status-pill-green">Just in Time</span>
+            <span class="status-pill status-pill-red">Overdue</span>
+          </div>
+          <p class="mt-3">You can filter this archive by month and year, and export the current view as a clean PDF report for your records.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="page-card shadow mt-4 animated-section" style="animation-delay: 0.3s;">
+        <h2 class="mb-4">Technology Stack</h2>
+        <div class="row row-cols-3 row-cols-sm-3 row-cols-md-6 g-4 text-center">
+            <div class="col tech-logo" aria-label="Go">
+                <img src="https://www.svgrepo.com/show/373635/go-gopher.svg" alt="Go logo">
+                <span>Go</span>
+            </div>
+            <div class="col tech-logo" aria-label="Gin Gonic">
+                <img src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" alt="Gin logo">
+                <span>Gin</span>
+            </div>
+            <div class="col tech-logo" aria-label="HTML5">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML5 logo">
+                <span>HTML5</span>
+            </div>
+            <div class="col tech-logo" aria-label="CSS3">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS3 logo">
+                <span>CSS3</span>
+            </div>
+            <div class="col tech-logo" aria-label="JavaScript">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Javascript-shield.svg" alt="JavaScript logo">
+                <span>JavaScript</span>
+            </div>
+            <div class="col tech-logo" aria-label="Bootstrap">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="Bootstrap logo">
+                <span>Bootstrap</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-card shadow mt-4 animated-section" style="animation-delay: 0.4s;">
+      <h2 class="mb-4">Changelog</h2>
+      <div>
+        <h3 class="h5">Version 1.2 <span class="text-muted fs-6 fw-normal">- July 2025</span></h3>
+        <ul>
+          <li>Initial public release on GitHub.</li>
+          <li>Implemented new app branding and icons.</li>
+          <li>Added a bottom navigation bar for improved mobile view.</li>
+          <li>Introduced a "Tasks Overview" page with key statistics.</li>
+          <li>Added a Performance Graph for tracking monthly/yearly progress.</li>
+          <li>Implemented a toggleable Light/Dark theme.</li>
+          <li>Refactored frontend assets (JS/CSS) for maintainability.</li>
+          <li>General UI and user experience improvements.</li>
+        </ul>
+      </div>
+      <div class="mt-4">
+        <h3 class="h5">Version 1.0a <span class="text-muted fs-6 fw-normal">- July 2025</span></h3>
+        <ul>
+            <li>Added PDF export for completed tasks with month/year filter.</li>
+            <li>Added overdue highlighting and conditional export button visibility.</li>
+            <li>Implemented persistent filter state and various UI improvements.</li>
+        </ul>
+      </div>
+      <div class="mt-4">
+        <h3 class="h5">Version 1.0 <span class="text-muted fs-6 fw-normal">- June 2025</span></h3>
+        <ul>
+          <li>Initial release.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>
+
+
+<nav class="navbar fixed-bottom d-lg-none bottom-navbar">
+  <div class="container-fluid h-100">
+    <a href="/" class="bottom-nav-link {{ if eq .active "overview" }}active{{ end }}">
+      <span class="material-icons">dashboard</span><span class="bottom-nav-text">Overview</span>
+    </a>
+    <a href="/tasks" class="bottom-nav-link {{ if eq .active "tasks" }}active{{ end }}">
+      <span class="material-icons">assignment</span><span class="bottom-nav-text">Tasks</span>
+    </a>
+    <a href="/completed" class="bottom-nav-link {{ if eq .active "completed" }}active{{ end }}">
+      <span class="material-icons">check_circle</span><span class="bottom-nav-text">Completed</span>
+    </a>
+    <a href="/about" class="bottom-nav-link {{ if eq .active "about" }}active{{ end }}">
+      <span class="material-icons">info</span><span class="bottom-nav-text">About</span>
+    </a>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/static/js/logic.js"></script>
+</body>
+</html>
+{{ end }}

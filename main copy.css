@@ -1,0 +1,613 @@
+
+    :root {
+      --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --bg-image: url('/static/images/bg.jpg');
+      --bg-overlay: rgba(255, 255, 255, 0.4);
+      --border-color: #dee2e6;
+      --text-color: #212529;
+      --text-muted-color: #6c757d;
+      --heading-color: #1a1d21;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      /* Adjusted for blur effect */
+      --card-bg-color: rgba(255, 255, 255, 0.55);
+      --card-border-color: rgba(0, 0, 0, 0.1);
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+      --navbar-bg: #e9e9e9;
+      --bottom-navbar-bg: #e9e9e9;
+      --accent-color-light: rebeccapurple;
+      --accent-color-dark: #0d6efd;
+      --tag-bg: rgba(248, 249, 250, 0.7);
+      --tag-border-color: rgba(0, 0, 0, 0.1);
+      --tag-text-color: #212529;
+      --placeholder-bg: rgba(0, 0, 0, 0.05);
+      --placeholder-border: #ced4da;
+      --modal-bg: #f2f2f2;
+    }
+
+    html[data-theme="dark"] {
+      --bg-image: url('/static/images/dark.png');
+      --bg-overlay: rgba(18, 18, 18, 0.6);
+      --border-color:rgba(255, 255, 255, 0.15);
+      --text-color: #e9ecef;
+      --text-muted-color: #adb5bd;
+      --heading-color: #ffffff;
+      --card-bg: rgba(52, 58, 64, 0.25);
+      /* Adjusted for blur effect */
+      --card-bg-color: rgba(48, 48, 48, 0.55);
+      --card-border-color: rgba(255, 255, 255, 0.15);
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      --navbar-bg: linear-gradient(to bottom, #212529, #1a1e21);
+      --bottom-navbar-bg: #1a1e21;
+      --tag-bg: rgba(52, 58, 64, 0.7);
+      --tag-border-color: rgba(255, 255, 255, 0.15);
+      --tag-text-color: #e9ecef;
+      --placeholder-bg: rgba(255, 255, 255, 0.1);
+      --placeholder-border: rgba(255, 255, 255, 0.2);
+      --modal-bg: #2b3035;
+    }
+
+    /* --- Base & Typography --- */
+    body {
+      padding-top: 5rem; 
+      padding-bottom: 2rem;
+      background-image: var(--bg-image);
+      background-size: cover; 
+      background-repeat: no-repeat; 
+      background-position: center; 
+      background-attachment: fixed;
+      font-family: var(--font-sans);
+      color: var(--text-color);
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* This rule MUST exist outside of any theme-specific block */
+    body::before {
+      content: ""; 
+      position: fixed; 
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: var(--bg-overlay); /* The variable switches the color automatically */
+      z-index: -1;
+      transition: background 0.3s ease-in-out;
+    }
+
+
+    .text-muted { color: var(--text-muted-color) !important; }
+    .text-brand { color: var(--accent-color-light); }
+    html[data-theme="dark"] .text-brand { color: var(--accent-color-dark); }
+
+
+    /* General Component Styles */
+    .details-toggle { text-decoration: none; color: var(--text-muted-color); font-weight: 500; font-size: 0.875rem; display: inline-flex; align-items: center; }
+    .details-toggle .material-symbols-outlined { font-size: 1.25rem; transition: transform 0.2s ease-in-out; }
+    .details-toggle[aria-expanded="true"] .material-symbols-outlined { transform: rotate(180deg); }
+    .btn .material-symbols-outlined { margin-right: 0.3rem; font-size: 1.1em; vertical-align: text-bottom; }
+
+
+    /* --- Layout & Cards, used in About/Help section --- */
+    .page-card {
+      background-color: var(--card-bg-color);
+      /* Frosted glass effect */
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid var(--card-border-color);
+      border-radius: 1rem; /* Softer, modern radius */
+      /* box-shadow: var(--card-shadow); */
+      padding: 2rem;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @media (min-width: 992px) {
+      .page-card { padding: 2.5rem; }
+    }
+
+    h1, h2, h3, .h1, .h2, .h3 {
+      color: var(--heading-color);
+      font-weight: 600;}
+
+
+    h1, h5 { color: var(--text-color); }
+    .text-muted { color: var(--text-muted-color) !important; }
+    /* ---End of Layout & Cards --- */
+
+    /* --- App Icon & Header --- */
+    .appicon-container {
+      position: relative; width: 100px; height: 100px;
+    }
+    .appicon-logo {
+      position: absolute; top: 0; left: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+    .is-light-icon { opacity: 1; }
+    .is-dark-icon { opacity: 0; }
+    html[data-theme="dark"] .is-light-icon { opacity: 0; }
+    html[data-theme="dark"] .is-dark-icon { opacity: 1; }
+
+
+    /* --- Details/Summary Accordion --- */
+    details { margin-top: 1.5rem; }
+    summary {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--heading-color);
+      cursor: pointer;
+      list-style: none; /* Hide default marker */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; } /* Hide marker for Safari */
+    .details-content { padding-top: 1rem; }
+    .details-icon {
+      font-family: 'Material Icons'; font-size: 1.75rem;
+      transition: transform 0.2s ease-in-out;
+      color: var(--text-muted-color);
+      font-style: normal;
+    }
+    details[open] > summary .details-icon { transform: rotate(180deg); }
+
+    summary:focus {
+      outline: none;
+    }
+
+    summary:focus-visible {
+      /* You can restore the default outline or define your own */
+      outline: 2px solid var(--accent-color-dark);
+      outline-offset: 2px;
+    }
+
+
+    /* --- Every types of Pills --- */
+    .priority-badge, .status-pill {
+      display: inline-block;
+      padding: 0.25em 0.6em;
+      font-size: .875em;
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.375rem;
+    }
+    .status-pill-purple { color: #663399; background-color: rgba(102, 51, 153, 0.1); }
+    html[data-theme="dark"] .status-pill-purple { color: #A06CD5; background-color: rgba(160, 108, 213, 0.1); }
+    .status-pill-green { color: #198754; background-color: rgba(25, 135, 84, 0.1); }
+    .status-pill-red { color: #dc3545; background-color: rgba(220, 53, 69, 0.1); }
+    .filter-pill { background-color: var(--tag-bg); color: var(--tag-text-color); border: 1px solid var(--border-color); }
+    html[data-theme="dark"] .filter-pill .btn-close { filter: invert(1); }
+    .version-pill {
+      background-color: var(--tag-bg);
+      color: var(--tag-text-color);
+      border: 1px solid var(--tag-border-color);
+      font-size: 1rem;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    .view-status-tag { 
+        background-color: var(--tag-bg); 
+        color: var(--tag-text-color); 
+        border-color: var(--border-color) !important; 
+    }
+    /* End of Every types of Pills */
+
+
+    /* --- Tech Stack Logos --- */
+    .tech-logo {
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+    .tech-logo:hover {
+        transform: translateY(-4px);
+    }
+    .tech-logo img {
+        height: 48px;
+        max-width: 120px;
+    }
+    .tech-logo span {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    /* End of Tech Stack Logos */
+
+
+    /* --- Subtle Animation --- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blipIn { 
+      0% { opacity: 0; transform: scale(0.5, 0); } 
+      50% { opacity: 1; transform: scale(1, 0.01); } 
+      100% { opacity: 1; transform: scale(1, 1); } 
+    }
+
+    .animated-section {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .animated-blip {
+      display: inline-block;
+      animation: blipIn 0.6s ease-out forwards;
+    }
+
+
+    /* --- Navbar Styles (unchanged from original) --- */
+    .gtk-navbar { background: var(--navbar-bg); border-bottom: 1px solid var(--border-color); transition: all 0.3s ease-in-out; }
+    html[data-theme="dark"] .nav-link:not(.text-white) { color: var(--text-muted-color) !important; }
+    html[data-theme="dark"] .navbar-toggler-icon { filter: invert(1); }
+    .hover-overview:hover { background-color: rebeccapurple; color: #fff !important; }
+    .hover-tasks:hover { background-color: #0d6efd; color: #fff !important; }
+    .hover-completed:hover { background-color: #198754; color: #fff !important; }
+    .hover-about:hover { background-color: #ffc107; color: #fff !important; }
+    html[data-theme="dark"] .hover-overview:hover,
+    html[data-theme="dark"] .hover-tasks:hover,
+    html[data-theme="dark"] .hover-completed:hover,
+    html[data-theme="dark"] .hover-about:hover { color: #fff !important; }
+    .bg-purple { background-color:rebeccapurple; }
+    .logo-dark { display: none; }
+    html[data-theme="dark"] .logo-dark { display: inline; }
+    html[data-theme="dark"] .logo-light { display: none; }
+    /* End of Navbar Styles */
+
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50rem; /* Pill shape on hover */
+        background-color: transparent; /* Makes it flat */
+        border: none; /* Removes the border */
+        color: #6c757d; /* Muted dark gray for the icon */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        outline: none;
+    }
+
+    /* This rule gives the icon a solid "filled" look */
+    .theme-toggle-btn .material-icons {
+        font-size: 22px;
+        margin: 0;
+        /* This is the key to making the icon filled */
+        /* font-variation-settings: 'FILL' 1; */
+    }
+
+    /* --- Light Mode Hover Effect --- */
+    /* Matches the purple "Overview" hover style */
+    html:not([data-theme="dark"]) .theme-toggle-btn:hover {
+        background-color: rebeccapurple;
+        color: #fff;
+    }
+
+    /* --- Dark Mode Hover Effect --- */
+    /* Matches the blue "Tasks" hover style */
+    html[data-theme="dark"] .theme-toggle-btn:hover {
+        background-color: #0d6efd; /* The blue from your nav items */
+        color: #fff;
+    }
+    /* End of Theme Toggle Button Styles */
+
+
+    /* --- NEW: Mobile Bottom Navbar Styles --- */
+    .bottom-navbar {
+    height: 65px; /* A comfortable height for tapping */
+    background-color: var(--bottom-navbar-bg);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    padding: 0;
+    }
+
+    .bottom-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    height: 100%;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-size: 0.75rem;
+    transition: color 0.2s ease-in-out;
+    }
+
+    .bottom-nav-link .material-icons {
+    font-size: 24px;
+    margin-bottom: 2px;
+    }
+
+    /* Style for the active link */
+    .bottom-nav-link.active {
+    color: rebeccapurple; /* A consistent blue for the active state */
+    }
+
+    html[data-theme="dark"] .bottom-nav-link.active {
+    color: #0d6efd; /* A slightly brighter blue for dark mode */
+    }
+
+        @media (max-width: 992px) {
+        body {
+            /* Adds extra space at the bottom for the 65px bottom navbar + breathing room */
+            padding-bottom: 80px;
+        }
+    }
+    /* End of Mobile Bottom Navbar Styles */
+
+
+    /* @media (max-width: 991.98px) { body { padding-bottom: 80px; } } */
+
+
+    /* Task/Stat Card & Graph Pane Thingamabobs */
+    .task-card {
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      background-color: var(--card-bg);
+      animation: fadeInUp 0.5s ease-out forwards; opacity: 0;
+    }
+
+    .task-card.fade-in { animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+    .task-col:nth-child(1) .task-card { animation-delay: 0.05s; }
+    .task-col:nth-child(2) .task-card { animation-delay: 0.10s; }
+    .task-col:nth-child(3) .task-card { animation-delay: 0.15s; }
+
+    .stat-card {
+      border: 2px solid; border-left: 6px solid; border-radius: 1rem;
+      padding: 1.25rem; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      display: flex; flex-direction: column; justify-content: space-between; aspect-ratio: 1 / 1;
+      position: relative; overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0; transform: translateY(30px);}
+    
+    .stat-card.fade-in { animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+    .stat-number { 
+      font-size: 3.5rem; font-weight: bold; 
+      transition: color 0.6s cubic-bezier(0.4, 0, 0.2, 1);}
+    .stat-label {
+      transition: color 0.6s cubic-bezier(0.4, 0, 0.2, 1);}
+    .icon-placeholder { 
+      opacity: 0.5; font-size: 3.5rem; position: absolute; right: 1rem; bottom: 0.5rem;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);}
+
+    .graph-pane {
+      border: 2px solid rebeccapurple; border-left: 6px solid rebeccapurple;
+      border-radius: 1rem; padding: 1.5rem;
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      background-color: rgba(102, 51, 153, 0.05); height: 300px;
+      /* Initial state for page load animation */
+      opacity: 0;}
+
+    /* Dark mode styles for the graph pane */
+    html[data-theme="dark"] .graph-pane {
+      border-color: #A06CD5; border-left-color: #A06CD5;
+      background-color: rgba(160, 108, 213, 0.05);}
+
+    .graph-pane.fade-in {
+      /* animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
+      animation: blipIn 0.2s ease-out forwards;
+    }
+
+    /* Placeholder Box */
+    .placeholder-box {
+      border: 4px dashed var(--placeholder-border);
+      border-radius: var(--bs-border-radius-xl);
+      background-color: var(--placeholder-bg);
+      padding: 3rem 1.5rem; min-height: 50vh;
+      display: flex; justify-content: center; align-items: center; text-align: center;
+      animation: blipIn 0.5s ease-out forwards; opacity: 0;
+    }
+
+    .legend-swatch { display: inline-block; width: 12px; height: 12px; margin-right: 0.5rem; border-radius: 3px; }
+
+    /* Completed Card Status Colors */
+    .task-card.ahead { border: 2px solid rebeccapurple; border-left: 6px solid rebeccapurple; }
+    html[data-theme="dark"] .task-card.ahead { border-color: #A06CD5; border-left-color: #A06CD5; }
+    .task-card.justintime { border: 2px solid #198754; border-left: 6px solid #198754; }
+    .task-card.overdue { border: 2px solid #dc3545; border-left: 6px solid #dc3545; }
+    html:not([data-theme="dark"]) .task-card.ahead { background-color: rgba(102, 51, 153, 0.1); }
+    html:not([data-theme="dark"]) .task-card.justintime { background-color: rgba(25, 135, 84, 0.1); }
+    html:not([data-theme="dark"]) .task-card.overdue { background-color: rgba(220, 53, 69, 0.1); }
+    html[data-theme="dark"] .task-card.ahead { background-color: rgba(102, 51, 153, 0.2); }
+    html[data-theme="dark"] .task-card.justintime { background-color: rgba(25, 135, 84, 0.2); }
+    html[data-theme="dark"] .task-card.overdue { background-color: rgba(220, 53, 69, 0.2); }
+    .text-purple { color: rebeccapurple; }
+    html[data-theme="dark"] .text-purple { color: #A06CD5; }
+
+    /* Ongoing Task Card Status Colors */
+    .task-card.status-ongoing { border: 2px solid #0d6efd; border-left: 6px solid #0d6efd; }
+    .task-card.status-due-today { border: 2px solid #ffc107; border-left: 6px solid #ffc107; }
+    .task-card.status-overdue { border: 2px solid #dc3545; border-left: 6px solid #dc3545; }
+    html:not([data-theme="dark"]) .task-card.status-due-today { background-color: rgba(255, 193, 7, 0.1); }
+    html:not([data-theme="dark"]) .task-card.status-overdue { background-color: rgba(220, 53, 69, 0.1); }
+    html[data-theme="dark"] .task-card.status-due-today { background-color: rgba(255, 193, 7, 0.15); }
+    html[data-theme="dark"] .task-card.status-overdue { background-color: rgba(220, 53, 69, 0.15); }
+
+    /* Dedicated Stat Boxes Color Palette */
+    .border-indigo, .border-purple { border-color: rebeccapurple; }
+    html[data-theme="dark"] .border-purple,
+    html[data-theme="dark"] .border-indigo {
+    border-color: #A06CD5 !important;}
+
+    html[data-theme="dark"] .text-purple,
+    html[data-theme="dark"] .text-indigo {
+    color: #A06CD5 !important;}
+
+    .bg-indigo, .bg-purple { background-color: rebeccapurple; }
+    .border-yellow { border-color: #ffc107; }
+    .border-red { border-color: #dc3545; }
+    .border-blue { border-color: #0d6efd; }
+    .border-green { border-color: #198754; }
+    .text-indigo, .text-purple { color: rebeccapurple; }
+    .text-yellow { color: #ffc107; }
+    .text-red { color: #dc3545; }
+    .text-blue { color: #0d6efd; }
+    .text-green { color: #198754; }
+
+    .bg-gradient-indigo, .bg-gradient-purple { background: linear-gradient(135deg, rgba(102, 51, 153, 0.2), rgba(102, 51, 153, 0.05)); }
+    html[data-theme="dark"] .bg-gradient-purple 
+    html[data-theme="dark"] .bg-gradient-indigo {
+    background: linear-gradient(135deg, rgba(160, 108, 213, 0.2), rgba(160, 108, 213, 0.05));
+    }
+    .bg-gradient-yellow { background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 193, 7, 0.05)); }
+    .bg-gradient-red { background: linear-gradient(135deg, rgba(220, 53, 69, 0.2), rgba(220, 53, 69, 0.05)); }
+    .bg-gradient-blue { background: linear-gradient(135deg, rgba(13, 110, 253, 0.15), rgba(13, 110, 253, 0.03)); }
+    .bg-gradient-green { background: linear-gradient(135deg, rgba(25, 135, 84, 0.2), rgba(25, 135, 84, 0.05)); }
+
+    /* This ensures all text within the card body uses the theme's text colors */
+    html[data-theme="dark"] .card .card-body,
+    html[data-theme="dark"] .card .card-text,
+    html[data-theme="dark"] .card .card-text small {
+      color: var(--text-muted-color) !important;
+    }
+
+    html[data-theme="dark"] .card .card-title {
+      color: var(--text-color) !important;
+    }
+    /* End of Task Card Thingamabobs */
+
+    /* Modal Styles */
+    .modal-content { border-radius: 1.2rem !important; border: 1px solid rgba(128, 128, 128, 0.2); background-color: var(--modal-bg); }
+    html[data-theme="dark"] .modal-content { border-color: rgba(255,255,255,0.2); }
+    .modal-header, .modal-footer { border-color: rgba(0, 0, 0, 0.1); }
+    html[data-theme="dark"] .modal-header, html[data-theme="dark"] .modal-footer { border-color: rgba(255,255,255,0.1); }
+    .modal.fade .modal-dialog { transform: scale(1, 0); transition: transform 0.18s ease-out; }
+    .modal.show .modal-dialog { transform: scale(1, 1); }
+    .modal-content .btn-close { border: 1px solid var(--border-color) !important; }
+    html[data-theme="dark"] .modal-content .btn-close { filter: invert(1); }
+
+        /* Custom Close Button for Modals */
+        .adwaita-close {
+        width: 16px;
+        height: 16px;
+        border-radius: 50% !important; /* Force a perfect circle */
+        border: 1px;
+        border-color: #aeaeae;
+        padding: 0;
+        opacity: 0.7;
+        transition: all 0.2s ease-in-out;
+        /* Override Bootstrap's SVG and set our own background */
+        background-color: #d4d4d4;
+        background-image: var(--bs-btn-close-bg); /* Use Bootstrap's 'X' icon */
+        background-size: 0.75em;
+        }
+
+        .adwaita-close:hover {
+        opacity: 1;
+        background-color: #d0d0d0;
+        }
+
+        /* Accessible focus ring, Adwaita blue */
+        .adwaita-close:focus-visible {
+        opacity: 1;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.7);
+        }
+
+        /* --- Dark Theme Styles for the button --- */
+        html[data-theme="dark"] .adwaita-close {
+        background-color: rgba(200, 255, 255, 0.1);
+        filter: invert(1); /* This makes the 'X' icon white */
+        }
+
+        html[data-theme="dark"] .adwaita-close:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        }
+        /* End of Custom Close Button for Modals */
+
+        /* Search Bar and Forms*/
+        .search-icon { position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); color: var(--text-muted-color); pointer-events: none; }
+        #taskSearch { padding-left: 2.5rem; }
+
+        /* --- Dark Theme Fix for Forms --- */
+        html[data-theme="dark"] .form-control,
+        html[data-theme="dark"] .form-select,
+        html[data-theme="dark"] textarea {
+        background-color: var(--tag-bg);
+        color: var(--text-color);
+        border-color: var(--border-color);
+        }
+
+        /* This fixes the placeholder text color (e.g., "Type to search...") */
+        html[data-theme="dark"] .form-control::placeholder {
+        color: var(--text-muted-color);
+        opacity: 0.7;
+        }
+        /* End of Search Bar and Forms */
+    
+    .view-option { 
+      cursor: pointer; 
+      border: 1px solid #dee2e6; 
+      padding: 0.5rem 1rem; 
+      border-radius: 50rem; /* Rounded pill shape like Apply View button */
+      transition: all 0.15s ease-in-out; 
+      background-color: #fff;
+      color: #6c757d;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-align: center;
+      min-width: 120px; /* Fixed width for consistency */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    html[data-theme="dark"] .view-option {
+        background-color: var(--tag-bg);
+        color: var(--tag-text-color);
+        border-color: var(--border-color);
+    }
+
+    .view-option[data-view="ongoing"]:hover,
+    .view-option[data-view="ongoing"].active {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+      color: #fff;
+    }
+    
+    .view-option[data-view="completed"]:hover,
+    .view-option[data-view="completed"].active {
+      background-color: #198754;
+      border-color: #198754;
+      color: #fff;
+    }
+    
+    .view-option[data-sort="urgency"]:hover,
+    .view-option[data-sort="urgency"].active {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: #fff;
+    }
+    
+    .view-option[data-sort="priority"]:hover,
+    .view-option[data-sort="priority"].active {
+      background-color: #ffc107;
+      border-color: #ffc107;
+      color: #000;
+    }
+    /* End of Modal Styles */
+
+    
+    /* --- Custom Toast Styles --- */
+    .custom-toast {
+      background-color: var(--modal-bg);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 2px solid var(--border-color); /* Uniform, more pronounced border */
+      border-radius: 12px;
+      box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+      color: var(--text-color);
+      min-width: 250px; /* Ensures toast doesn't look too cramped */
+    }
+
+    /* Monochrome icon style */
+    .custom-toast .material-icons {
+      color: var(--text-muted-color); /* A subtle, monochrome gray */
+      font-size: 22px;
+    }
+

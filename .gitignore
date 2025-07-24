@@ -1,0 +1,22 @@
+# Go binaries and temp files
+/tmp
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Log files
+*.log
+build-errors.log
+air.log
+
+# Database file
+*.db
+
+# Reports directory
+/reports/
+
+# IDE files
+.idea/
+.vscode/

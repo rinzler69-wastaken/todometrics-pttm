@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 135.46001 135.46001"
+   version="1.1"
+   id="svg20"
+   width="135.46001"
+   height="135.46001"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient1">
+      <stop
+         style="stop-color:#e9e9e9;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#e9e9e9;stop-opacity:1;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <style
+       id="style1">.cls-1{fill:#663695;}.cls-2{fill:#4374ba;}.cls-3{fill:#fec111;}.cls-4{fill:#fff;}</style>
+    <linearGradient
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="68.520622"
+       y1="11.244131"
+       x2="68.52063"
+       y2="121.40479"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <rect
+     class="cls-4"
+     x="-4.4140626e-07"
+     y="2.2070313e-07"
+     width="135.46001"
+     height="135.46001"
+     rx="25"
+     id="rect14"
+     style="fill:url(#linearGradient2);fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.14902;paint-order:normal" />
+  <path
+     d="m 62.560002,84.629999 h -11.54 v -40.95 h 11.54 v 6.95 h 0.47 a 12.37,12.37 0 0 1 3.78,-5.58 10.77,10.77 0 0 1 7.22,-2.3 12.06,12.06 0 0 1 7.17,2.1 11.73,11.73 0 0 1 4.29,6.17 h 0.24 a 11.48,11.48 0 0 1 4.44,-5.85 13.41,13.41 0 0 1 8,-2.42 10.66,10.66 0 0 1 9.089998,4.25 q 3.15,4.25 3.15,12 v 25.66 H 98.910002 v -24.75 c 0,-2.65 -0.46,-4.62 -1.36,-5.89 a 4.89,4.89 0 0 0 -4.26,-1.91 8.31,8.31 0 0 0 -3.27,0.66 6,6 0 0 0 -2.54,2 5.49,5.49 0 0 0 -1,3.35 v 26.52 h -11.52 v -24.73 c 0,-2.65 -0.46,-4.62 -1.4,-5.89 a 4.9,4.9 0 0 0 -4.21,-1.91 8.15,8.15 0 0 0 -3.2,0.66 6.24,6.24 0 0 0 -2.57,2 5.32,5.32 0 0 0 -1,3.35 z"
+     id="path14"
+     style="fill:#000000" />
+  <path
+     d="m 38.320002,52.649999 v 23 h 7.49 v 9 h -6.87 q -5.93,0 -9,-3 -3.07,-3 -3.12,-8.89 v -20 h -5.78 v -9 h 2.89 c 1.56,0 2.63,-0.38 3.2,-1.13 a 5.28,5.28 0 0 0 0.86,-3.24 v -2 l 10.37,-10.37 v 16.66 h 8.11 v 9 z"
+     id="path15"
+     style="fill:#000000" />
+  <rect
+     class="cls-1"
+     x="26.779999"
+     y="92.369995"
+     width="27.889999"
+     height="11.68"
+     id="rect15" />
+  <rect
+     class="cls-2"
+     x="54.669998"
+     y="92.369995"
+     width="27.889999"
+     height="11.68"
+     id="rect16"
+     style="fill:#0d6efd" />
+  <rect
+     class="cls-3"
+     x="82.559998"
+     y="92.369995"
+     width="27.889999"
+     height="11.68"
+     id="rect17"
+     style="fill:#ffc107" />
+</svg>
