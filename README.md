@@ -1,7 +1,7 @@
 # todometrics
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rinzler69-wastaken/todometrics-pttm/main/server/static/images/appicon-dark.svg" alt="todometrics App Icon" width="120">
+  <img src="https://raw.githubusercontent.com/rinzler69-wastaken/todometrics-pttm/static/images/appicon-dark.svg" alt="todometrics App Icon" width="120">
 </p>
 
 <p align="center">
@@ -15,10 +15,10 @@
   <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"></a>
 </p>
 
-![todometrics Screenshot](<link-to-your-screenshot.png>)
+<!-- ![todometrics Screenshot](<link-to-your-screenshot.png>)
 *Replace the link above with a full screenshot of your application.*
 
----
+--- -->
 
 ## 🧠 Philosophy
 
