@@ -3,10 +3,11 @@ package controllers
 import (
 	// Import the JSON package
 	"fmt"
-	"go-pttm/config"
-	"go-pttm/models"
 	"net/http"
 	"time"
+
+	"github.com/rinzler69-wastaken/todometrics-pttm/config"
+	"github.com/rinzler69-wastaken/todometrics-pttm/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jung-kurt/gofpdf"

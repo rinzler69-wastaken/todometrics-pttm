@@ -7,7 +7,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"go-pttm/models"
+	"github.com/rinzler69-wastaken/todometrics-pttm/models"
 )
 
 var DB *gorm.DB

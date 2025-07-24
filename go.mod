@@ -1,4 +1,4 @@
-module go-pttm
+module github.com/rinzler69-wastaken/todometrics-pttm
 
 go 1.24.4
 

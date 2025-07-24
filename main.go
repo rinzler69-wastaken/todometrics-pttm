@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"go-pttm/config"
-	"go-pttm/controllers"
+	"github.com/rinzler69-wastaken/todometrics-pttm/config"
+	"github.com/rinzler69-wastaken/todometrics-pttm/controllers"
 
 	"github.com/gin-gonic/gin"
 )
