@@ -1,7 +1,7 @@
 # todometrics
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rinzler69-wastaken/todometrics-pttm/static/images/appicon-dark.svg" alt="todometrics App Icon" width="120">
+  <img src="https://github.com/rinzler69-wastaken/todometrics-pttm/tree/main/static/images/appicon-dark.svg" alt="todometrics App Icon" width="120">
 </p>
 
 <p align="center">
