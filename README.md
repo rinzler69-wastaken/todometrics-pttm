@@ -72,7 +72,7 @@ You need to have Go installed on your machine (version 1.18 or newer).
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/rinzler69-wastaken/todometrics-pttm.git](https://github.com/rinzler69-wastaken/todometrics-pttm.git)
+    git clone https://github.com/rinzler69-wastaken/todometrics-pttm.git
     cd todometrics-pttm
     ```
 
