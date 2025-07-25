@@ -21,75 +21,6 @@ type StatBox struct {
 	Icon  string `json:"icon"`
 }
 
-// func GetOverviewStats(c *gin.Context) {
-// 	view := c.DefaultQuery("view", "ongoing")
-// 	sort := c.DefaultQuery("sort", "urgency")
-// 	now := time.Now()
-
-// 	var statBoxes [4]StatBox
-
-// 	if view == "completed" {
-// 		var completedTasks []models.Task
-// 		config.DB.Where("completed = ?", true).Find(&completedTasks)
-
-// 		completionCounts := map[string]int{"ahead": 0, "justintime": 0, "overdue": 0}
-// 		for _, task := range completedTasks {
-// 			sameDay := task.CompletedAt.Year() == task.DueDate.Year() && task.CompletedAt.YearDay() == task.DueDate.YearDay()
-// 			if task.CompletedAt.After(task.DueDate) {
-// 				completionCounts["overdue"]++
-// 			} else if sameDay {
-// 				completionCounts["justintime"]++
-// 			} else {
-// 				completionCounts["ahead"]++
-// 			}
-// 		}
-// 		statBoxes[0] = StatBox{"TOTAL COMPLETED", len(completedTasks), "blue", "🏆"}
-// 		statBoxes[1] = StatBox{"AHEAD OF TIME", completionCounts["ahead"], "purple", "🚀"}
-// 		statBoxes[2] = StatBox{"JUST IN TIME", completionCounts["justintime"], "green", "🎯"}
-// 		statBoxes[3] = StatBox{"OVERDUE", completionCounts["overdue"], "red", "🚨"}
-// 	} else { // "ongoing" view
-// 		var ongoingTasks []models.Task
-// 		config.DB.Where("completed = ?", false).Find(&ongoingTasks)
-
-// 		statBoxes[0] = StatBox{"TOTAL TASKS", len(ongoingTasks), "purple", "📊"}
-
-// 		if sort == "priority" {
-// 			priorityCounts := map[string]int{"high": 0, "medium": 0, "low": 0}
-// 			for _, task := range ongoingTasks {
-// 				switch task.Priority {
-// 				case "High":
-// 					priorityCounts["high"]++
-// 				case "Medium":
-// 					priorityCounts["medium"]++
-// 				case "Low":
-// 					priorityCounts["low"]++
-// 				}
-// 			}
-// 			statBoxes[1] = StatBox{"HIGH PRIORITY", priorityCounts["high"], "red", "🔥"}
-// 			statBoxes[2] = StatBox{"MEDIUM PRIORITY", priorityCounts["medium"], "yellow", "⚠️"}
-// 			statBoxes[3] = StatBox{"LOW PRIORITY", priorityCounts["low"], "blue", "🧊"}
-// 		} else { // "urgency" sort
-// 			urgencyCounts := map[string]int{"dueToday": 0, "overdue": 0, "ongoing": 0}
-// 			for _, task := range ongoingTasks {
-// 				// FIX: Check if the task is overdue FIRST, using the full timestamp.
-// 				if task.DueDate.Before(now) {
-// 					urgencyCounts["overdue"]++
-// 					// This will now only catch tasks due LATER today.
-// 				} else if task.DueDate.Format("2006-01-02") == now.Format("2006-01-02") {
-// 					urgencyCounts["dueToday"]++
-// 				} else {
-// 					urgencyCounts["ongoing"]++
-// 				}
-// 			}
-// 			statBoxes[1] = StatBox{"OVERDUE", urgencyCounts["overdue"], "red", "⏰"}
-// 			statBoxes[2] = StatBox{"DUE TODAY", urgencyCounts["dueToday"], "yellow", "📅"}
-// 			statBoxes[3] = StatBox{"ONGOING", urgencyCounts["ongoing"], "blue", "🕒"}
-// 		}
-// 	}
-
-// 	c.JSON(http.StatusOK, statBoxes)
-// }
-
 func GetOverviewStats(c *gin.Context) {
 	view := c.DefaultQuery("view", "ongoing")
 	sort := c.DefaultQuery("sort", "urgency")
@@ -98,7 +29,24 @@ func GetOverviewStats(c *gin.Context) {
 	var statBoxes [4]StatBox
 
 	if view == "completed" {
-		// ... (no changes needed in this part) ...
+		var completedTasks []models.Task
+		config.DB.Where("completed = ?", true).Find(&completedTasks)
+
+		completionCounts := map[string]int{"ahead": 0, "justintime": 0, "overdue": 0}
+		for _, task := range completedTasks {
+			sameDay := task.CompletedAt.Year() == task.DueDate.Year() && task.CompletedAt.YearDay() == task.DueDate.YearDay()
+			if task.CompletedAt.After(task.DueDate) {
+				completionCounts["overdue"]++
+			} else if sameDay {
+				completionCounts["justintime"]++
+			} else {
+				completionCounts["ahead"]++
+			}
+		}
+		statBoxes[0] = StatBox{"TOTAL COMPLETED", len(completedTasks), "blue", "🏆"}
+		statBoxes[1] = StatBox{"AHEAD OF TIME", completionCounts["ahead"], "purple", "🚀"}
+		statBoxes[2] = StatBox{"JUST IN TIME", completionCounts["justintime"], "green", "🎯"}
+		statBoxes[3] = StatBox{"OVERDUE", completionCounts["overdue"], "red", "🚨"}
 	} else { // "ongoing" view
 		var ongoingTasks []models.Task
 		config.DB.Where("completed = ?", false).Find(&ongoingTasks)
@@ -106,19 +54,28 @@ func GetOverviewStats(c *gin.Context) {
 		statBoxes[0] = StatBox{"TOTAL TASKS", len(ongoingTasks), "purple", "📊"}
 
 		if sort == "priority" {
-			// ... (no changes needed in this part) ...
+			priorityCounts := map[string]int{"high": 0, "medium": 0, "low": 0}
+			for _, task := range ongoingTasks {
+				switch task.Priority {
+				case "High":
+					priorityCounts["high"]++
+				case "Medium":
+					priorityCounts["medium"]++
+				case "Low":
+					priorityCounts["low"]++
+				}
+			}
+			statBoxes[1] = StatBox{"HIGH PRIORITY", priorityCounts["high"], "red", "🔥"}
+			statBoxes[2] = StatBox{"MEDIUM PRIORITY", priorityCounts["medium"], "yellow", "⚠️"}
+			statBoxes[3] = StatBox{"LOW PRIORITY", priorityCounts["low"], "blue", "🧊"}
 		} else { // "urgency" sort
 			urgencyCounts := map[string]int{"dueToday": 0, "overdue": 0, "ongoing": 0}
-
 			for _, task := range ongoingTasks {
-
-				// --- ROBUST FIX IS HERE ---
-				// The task.DueDate.Before(now) check is correct IF the timezone is right.
-				// This new logic is safer.
+				// FIX: Check if the task is overdue FIRST, using the full timestamp.
 				if task.DueDate.Before(now) {
 					urgencyCounts["overdue"]++
-					// Compare Year, Month, and Day to be immune to timezone differences.
-				} else if task.DueDate.Year() == now.Year() && task.DueDate.Month() == now.Month() && task.DueDate.Day() == now.Day() {
+					// This will now only catch tasks due LATER today.
+				} else if task.DueDate.Format("2006-01-02") == now.Format("2006-01-02") {
 					urgencyCounts["dueToday"]++
 				} else {
 					urgencyCounts["ongoing"]++
@@ -132,6 +89,49 @@ func GetOverviewStats(c *gin.Context) {
 
 	c.JSON(http.StatusOK, statBoxes)
 }
+
+// func GetOverviewStats(c *gin.Context) {
+// 	view := c.DefaultQuery("view", "ongoing")
+// 	sort := c.DefaultQuery("sort", "urgency")
+// 	now := time.Now()
+
+// 	var statBoxes [4]StatBox
+
+// 	if view == "completed" {
+// 		// ... (no changes needed in this part) ...
+// 	} else { // "ongoing" view
+// 		var ongoingTasks []models.Task
+// 		config.DB.Where("completed = ?", false).Find(&ongoingTasks)
+
+// 		statBoxes[0] = StatBox{"TOTAL TASKS", len(ongoingTasks), "purple", "📊"}
+
+// 		if sort == "priority" {
+// 			// ... (no changes needed in this part) ...
+// 		} else { // "urgency" sort
+// 			urgencyCounts := map[string]int{"dueToday": 0, "overdue": 0, "ongoing": 0}
+
+// 			for _, task := range ongoingTasks {
+
+// 				// --- ROBUST FIX IS HERE ---
+// 				// The task.DueDate.Before(now) check is correct IF the timezone is right.
+// 				// This new logic is safer.
+// 				if task.DueDate.Before(now) {
+// 					urgencyCounts["overdue"]++
+// 					// Compare Year, Month, and Day to be immune to timezone differences.
+// 				} else if task.DueDate.Year() == now.Year() && task.DueDate.Month() == now.Month() && task.DueDate.Day() == now.Day() {
+// 					urgencyCounts["dueToday"]++
+// 				} else {
+// 					urgencyCounts["ongoing"]++
+// 				}
+// 			}
+// 			statBoxes[1] = StatBox{"OVERDUE", urgencyCounts["overdue"], "red", "⏰"}
+// 			statBoxes[2] = StatBox{"DUE TODAY", urgencyCounts["dueToday"], "yellow", "📅"}
+// 			statBoxes[3] = StatBox{"ONGOING", urgencyCounts["ongoing"], "blue", "🕒"}
+// 		}
+// 	}
+
+// 	c.JSON(http.StatusOK, statBoxes)
+// }
 
 func ShowOverview(c *gin.Context) {
 	view := c.DefaultQuery("view", "ongoing")
