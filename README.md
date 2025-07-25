@@ -76,19 +76,13 @@ You need to have Go installed on your machine (version 1.18 or newer).
     cd todometrics-pttm
     ```
 
-2.  **Navigate to the server directory:**
-    The Go application lives in the `server` subdirectory.
-    ```bash
-    cd server
-    ```
-
-3.  **Install dependencies:**
+2.  **Install dependencies:**
     Go will automatically fetch the required modules from `go.mod`.
     ```bash
     go mod tidy
     ```
 
-4.  **Run the application:**
+3.  **Run the application:**
     ```bash
     go run main.go
     ```
