@@ -15,10 +15,16 @@
   <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"></a>
 </p>
 
-<!-- ![todometrics Screenshot](<link-to-your-screenshot.png>)
-*Replace the link above with a full screenshot of your application.*
+## Screenshots
 
---- -->
+| Screenshot 1 | Screenshot 2 |
+|--------------|--------------|
+| ![Screenshot 1](screenshots/1.png) | ![Screenshot 2](screenshots/2.png) |
+| ![Screenshot 3](screenshots/3.png) | ![Screenshot 4](screenshots/4.png) |
+| ![Screenshot 5](screenshots/5.png) | ![Screenshot 6](screenshots/6.png) |
+| ![Screenshot 7](screenshots/7.png) | |
+
+---
 
 ## 🧠 Philosophy
 
